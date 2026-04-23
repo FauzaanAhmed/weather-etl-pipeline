@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+config/settings.ini
+.env
+logs/
+data/raw/**/*
+data/clean/**/*
+!data/raw/.gitkeep
+!data/clean/.gitkeep
+postgres_data/
+.DS_Store
