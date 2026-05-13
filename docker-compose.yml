@@ -1,0 +1,70 @@
+x-airflow-common: &airflow-common
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: weather-etl-airflow:2.8.1-python3.11
+  env_file:
+    - airflow.env
+  environment:
+    PYTHONPATH: /opt/airflow/src
+    SETTINGS_PATH: /opt/airflow/config/settings.ini
+  volumes:
+    - ./config:/opt/airflow/config
+    - ./dags:/opt/airflow/dags
+    - ./data:/opt/airflow/data
+    - ./src:/opt/airflow/src
+    - ./logs:/opt/airflow/logs
+    - ./setup/init.sql:/opt/airflow/setup/init.sql
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./setup/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        pip install -r /opt/airflow/requirements.txt
+        airflow db migrate
+        airflow users create \
+          --username admin \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email admin@example.com \
+          --password admin || true
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8081:8080"
+    restart: always
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    restart: always
+
+volumes:
+  postgres_data:
