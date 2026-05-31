@@ -1,6 +1,6 @@
 # Weather ETL Pipeline
 
-Batch pipeline for [NOAA Integrated Surface Database (ISD)](https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database) lite data hosted on AWS open data (`noaa-isd-pds`).
+ELT pipeline for [NOAA Integrated Surface Database (ISD)](https://www.ncei.noaa.gov/products/land-based-station/integrated-surface-database) lite data hosted on AWS open data (`noaa-isd-pds`).
 
 Pulls hourly station files, batches them, loads into PostgreSQL, and rolls up daily metrics (temp, dew point, pressure, wind, precipitation). Airflow orchestrates the daily and backfill flows; Metabase or plain SQL works for charts on top.
 
