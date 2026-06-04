@@ -19,7 +19,7 @@ default_args = {
     "owner": "fauzaan",
     "depends_on_past": False,
     "retries": 2,
-    "retry_delay": timedelta(minutes=10),
+    "retry_delay": timedelta(minutes=8),
 }
 
 
