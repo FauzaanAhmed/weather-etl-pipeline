@@ -24,7 +24,7 @@ def list_keys(bucket: str, prefix: str) -> list[str]:
     for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
         for obj in page.get("Contents", []):
             keys.append(obj["Key"])
-    logger.info("Listed %s objects under s3://%s/%s", len(keys), bucket, prefix)
+    logger.info("Found %s objects under s3://%s/%s", len(keys), bucket, prefix)
     return keys
 
 
