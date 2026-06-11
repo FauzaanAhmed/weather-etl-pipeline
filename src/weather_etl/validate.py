@@ -24,5 +24,5 @@ def validate_batch_files(batch_files: list[Path], min_files: int = 1) -> dict[st
         raise WeatherQualityError("No weather records found in batch files")
 
     metrics = {"batch_count": len(batch_files), "row_count": total_lines}
-    logger.info("Batch validation passed: %s", metrics)
+    logger.info("batch checks ok: %s", metrics)
     return metrics
