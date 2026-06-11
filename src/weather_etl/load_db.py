@@ -115,5 +115,5 @@ def upsert_daily(conn: connection, min_hourly_records: int) -> int:
         rows = cur.rowcount
     with conn, conn.cursor() as cur:
         cur.execute(f"DROP TABLE IF EXISTS {TMP_TABLE};")
-    logger.info("Upserted %s daily station rows", rows)
+    logger.info("Upserted %s daily rows station rows", rows)
     return rows
