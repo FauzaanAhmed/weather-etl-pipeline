@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def extract_archives(raw_year_dir: Path) -> list[Path]:
-    """Gunzip NOAA .gz files and return paths to extracted text files."""
+    """Gunzip noaa .gz files and return paths to extracted text files."""
     raw_year_dir.mkdir(parents=True, exist_ok=True)
     extracted: list[Path] = []
     for gz_path in raw_year_dir.glob("*.gz"):
