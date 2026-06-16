@@ -1,4 +1,4 @@
--- Example analytics queries for the weather table
+-- Analytics examples queries for the weather table
 
 SELECT
     date,
