@@ -25,4 +25,4 @@ NOAA open S3 (noaa-isd-pds)
 
 - ISD-lite values use `-9999` as missing; Postgres COPY maps that to NULL.
 - Daily upsert requires at least 4 hourly readings per station/day (configurable).
-- LocalExecutor keeps the stack simple for a laptop demo; swap to Celery if you need scale.
+- LocalExecutor is fine for the stack simple for a laptop demo; swap to Celery if you need scale.
