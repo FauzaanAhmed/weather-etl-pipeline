@@ -36,7 +36,7 @@ docker compose up -d
 
 Airflow UI: http://localhost:8081 — `admin` / `admin`
 
-Postgres is on host port **5433** (so it won't clash with other local DBs).
+Postgres is on port **5433** on localhost (so it won't clash with other local DBs).
 
 Enable `weather_daily_elt` or trigger a backfill run from the UI.
 
