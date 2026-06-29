@@ -14,7 +14,7 @@ from weather_etl.pipeline import run_daily
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run daily weather ELT locally")
+    parser = argparse.ArgumentParser(description="Run weather ELT ELT locally")
     parser.add_argument("--year", default=str(datetime.now(timezone.utc).year))
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
