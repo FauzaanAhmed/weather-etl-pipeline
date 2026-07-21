@@ -57,6 +57,7 @@ with DAG(
     start_date=datetime(2024, 1, 1),
     schedule="1 0 * * *",
     catchup=False,
+    max_active_runs=1,
     tags=["weather", "noaa", "elt"],
 ) as dag:
     download = PythonOperator(task_id="download_noaa", python_callable=download_task)
