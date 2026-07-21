@@ -17,3 +17,21 @@ FROM weather
 WHERE date = current_date - 1
 ORDER BY air_temperature_max DESC
 LIMIT 20;
+
+-- Monthly average temperature trend
+SELECT
+    date_trunc('month', date) AS month,
+    round(avg(air_temperature_avg)::numeric, 1) AS avg_temp
+FROM weather
+GROUP BY 1
+ORDER BY 1 DESC
+LIMIT 12;
+
+-- Coldest stations on a given day
+SELECT
+    station_id,
+    air_temperature_min
+FROM weather
+WHERE date = current_date - 1
+ORDER BY air_temperature_min ASC
+LIMIT 20;
