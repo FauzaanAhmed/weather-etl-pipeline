@@ -40,6 +40,21 @@ Postgres is on port **5433** on localhost (so it won't clash with other local DB
 
 Enable `weather_daily_elt` or trigger a backfill run from the UI.
 
+Backfill a specific year from the CLI:
+
+```bash
+airflow dags trigger weather_backfill_elt --exec-date 2023-01-01
+```
+
+## Troubleshooting
+
+| Issue | Fix |
+|---|---|
+| Airflow can't import `weather_etl` | Confirm `PYTHONPATH=/opt/airflow/src` in `airflow.env` |
+| Postgres connection refused on host | Use port **5433** when connecting from your laptop |
+| Empty batch after download | NOAA may not have updated files in the last 24h; try backfill DAG |
+| COPY fails on batch file | Check for corrupt `.gz` in `data/raw/` and re-run extract |
+
 ## Local run
 
 ```bash
@@ -54,6 +69,13 @@ python scripts/run_local.py --year 2024
 Daily row per `(station_id, date)` with avg/min/max for temperature, dew point, pressure, wind, and precipitation fields. See `setup/init.sql`.
 
 Example queries: [`sql/analytics.sql`](sql/analytics.sql)
+
+## Tests
+
+```bash
+pip install pytest
+pytest tests/
+```
 
 ## License
 
