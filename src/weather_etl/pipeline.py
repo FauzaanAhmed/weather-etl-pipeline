@@ -17,6 +17,7 @@ def run_download(year: str, daily: bool = False, settings: Settings | None = Non
     cfg = settings or load_settings()
     prefix = f"{cfg.noaa_prefix}/{year}/"
     keys = list_recent_keys(cfg.noaa_bucket, prefix) if daily else list_keys(cfg.noaa_bucket, prefix)
+    logger.info("Downloading %s NOAA files for year %s", len(keys), year)
     raw_dir = Path(cfg.raw_dir)
     download_many(cfg.noaa_bucket, keys, raw_dir)
     return keys
