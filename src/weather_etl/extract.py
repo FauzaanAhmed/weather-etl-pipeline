@@ -13,6 +13,10 @@ def extract_archives(raw_year_dir: Path) -> list[Path]:
     raw_year_dir.mkdir(parents=True, exist_ok=True)
     extracted: list[Path] = []
     for gz_path in raw_year_dir.glob("*.gz"):
+        if gz_path.stat().st_size == 0:
+            logger.warning("Skipping empty archive %s", gz_path.name)
+            gz_path.unlink(missing_ok=True)
+            continue
         out_path = gz_path.with_suffix("")
         with gzip.open(gz_path, "rb") as src, open(out_path, "wb") as dst:
             shutil.copyfileobj(src, dst)
