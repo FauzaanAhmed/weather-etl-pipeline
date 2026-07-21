@@ -10,4 +10,5 @@ data/clean/**/*
 !data/raw/.gitkeep
 !data/clean/.gitkeep
 postgres_data/
+.pytest_cache/
 .DS_Store
