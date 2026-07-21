@@ -49,7 +49,7 @@ with DAG(
     start_date=datetime(2018, 1, 1),
     schedule="@yearly",
     catchup=True,
-    max_active_runs=1  # one year at a time,
+    max_active_runs=1,
     tags=["weather", "noaa", "backfill"],
 ) as dag:
     download = PythonOperator(task_id="download_noaa", python_callable=download_task)
