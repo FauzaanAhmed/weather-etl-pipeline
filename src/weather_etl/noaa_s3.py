@@ -23,7 +23,9 @@ def list_keys(bucket: str, prefix: str) -> list[str]:
     paginator = client.get_paginator("list_objects_v2")
     for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
         for obj in page.get("Contents", []):
-            keys.append(obj["Key"])
+            key = obj["Key"]
+            if key.endswith(".gz"):
+                keys.append(key)
     logger.info("Found %s objects under s3://%s/%s", len(keys), bucket, prefix)
     return keys
 
@@ -35,8 +37,9 @@ def list_recent_keys(bucket: str, prefix: str, hours: int = 24) -> list[str]:
     paginator = client.get_paginator("list_objects_v2")
     for page in paginator.paginate(Bucket=bucket, Prefix=prefix):
         for obj in page.get("Contents", []):
-            if obj["LastModified"] >= cutoff:
-                keys.append(obj["Key"])
+            key = obj["Key"]
+            if key.endswith(".gz") and obj["LastModified"] >= cutoff:
+                keys.append(key)
     logger.info("Found %s objects modified in last %sh under %s", len(keys), hours, prefix)
     return keys
 
